@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All the Fishes</title>
+    <script src="https://pixijs.download/release/pixi.js"></script>
+</head>
+<body>
+
+<script>
+
+    //The App
+    const app = new PIXI.Application({
+        width:640,
+        height:480,
+        backgroundColor: 0x000000
+    });
+
+    //Add view to document
+    document.body.appendChild(app.view);
+
+    //Add our first sprite
+    let fish1 = PIXI.Sprite.from("img/Goldfish PNG.png");
+        fish1.anchor.set(.9,.5);
+        fish1.scale.set(.25);
+        fish1.tint = 0xFF9999;
+        
+    //Add it to the stage!
+    //app.stage.addChild(fish1);
+    
+    //Add our first sprite
+    let fish2 = PIXI.Sprite.from("img/Goldfish PNG.png");
+        fish2.anchor.set(.5);
+        fish2.scale.set(.30);
+        fish2.scale.x *= -1;
+        fish2.x = 500;
+        fish2.y = 0;
+        fish2.tint = 0x99FF99;
+        
+    //Add it to the stage!
+    //app.stage.addChild(fish2);
+
+    //Fish containers
+    let fish1_container = new PIXI.Container();
+        fish1_container.x = 200;
+        fish1_container.y = 200;
+        fish1_container.addChild(fish1);
+
+    //Create new container
+    let my_container = new PIXI.Container();
+        my_container.addChild(fish1_container);
+        my_container.addChild(fish2);
+
+    //Add container to stage
+    app.stage.addChild(my_container);
+
+    let counter = 0;
+
+    //Animation loop!
+    function loop() {
+
+        counter++;
+
+        //Fish 1 bobbing
+        fish1.y       = Math.sin(counter/40) * 30;
+        //Fish 1 wobbling
+        fish1.scale.x = .25 + Math.sin(counter/2)/400;
+        //Fish 1 container moving back and forth
+        fish1_container.x = 320 + Math.sin(counter/100) * 100;
+
+        fish2.y       = 300  + Math.sin(counter/50) * 30;
+        fish2.scale.x = -.25 + Math.sin(counter/2)/400;
+
+
+        requestAnimationFrame(loop);
+    }
+    loop();
+
+</script>
+
+</body>
+</html>
